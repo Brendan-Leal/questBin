@@ -1,9 +1,48 @@
 require('dotenv').config();
+const { addReqDoc, listAllBins, getAllReqDocs_FromOneBin, findSingleReqDoc_FromOneBin, deleteAllReqDocs_FromOneBin} = require('./lib/mongoQuery.js') 
 const express = require('express');
 const app = express();
 const port = process.env.PORT;
 
 app.use(express.static('public'));
+
+SEED_REQ = {
+  host: "github.com",
+  method: "GET",
+  status: 300
+};
+
+SEED_BIN = 'as324ljksfd';
+
+// navigate here to add one seed req to the seed bin
+app.get('/seed', (req, res) => {
+  addReqDoc(SEED_REQ, SEED_BIN).then(
+    response => {
+      res.send(response);
+    }
+  )
+})
+
+// Naviate here to get all of the requests in the bin
+// just use any parameter, such as "http://localhost:3000/12/view"
+app.get('/:id/view', (req, res) => {
+  getAllReqDocs_FromOneBin(SEED_BIN).then(
+    response => {
+      console.log(`There are ${response.length} records.`)
+      res.json(response);
+    }
+  )
+})
+
+// navigate here to delete all reqs from seed bin
+app.get('/delete-seed', (req, res) => {
+  deleteAllReqDocs_FromOneBin(SEED_BIN).then(
+    response => {
+      console.log(response);
+      res.send(response);
+    }
+  )
+})
 
 app.get('/', (req, res) => {
   res.send('Hello World')
@@ -12,11 +51,6 @@ app.get('/', (req, res) => {
 
 app.post('/', (req, res) => {
   //Submit the form / requesting a new URL
-})
-
-
-app.get('/:id/view', (req, res) => {
-  //Getting all of the requests in the bin
 })
 
 app.post('/:id', (req, res) => {
@@ -31,7 +65,5 @@ app.put('/:id', (req, res) => {
 app.delete('/:id', (req, res) => {
   //Capture a delete request to a bin
 })
-
-
 
 app.listen(port, () => console.log(`Listening on port ${port}`))
