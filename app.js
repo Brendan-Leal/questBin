@@ -10,7 +10,6 @@ app.use(express.static('public'));
 
 app.get('/api/create-bin', async (req, res) => {
   await createBin();
-  res.render('inspect-bin');
 
   // TODO: Decide what view engine to use
   res.sendFile(__dirname + "/public/view.html");
