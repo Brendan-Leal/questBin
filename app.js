@@ -4,6 +4,9 @@ const express = require('express');
 const app = express();
 const port = process.env.PORT;
 
+app.set("views", "./views");
+app.set("view engine", "pug");
+
 app.use(express.static('public'));
 
 SEED_REQ = {
@@ -45,8 +48,19 @@ app.get('/delete-seed', (req, res) => {
 })
 
 app.get('/', (req, res) => {
-  res.send('Hello World')
-  //Homepage
+  res.render('index')
+})
+
+app.get('/:id', (req, res) => {
+  res.render('bin');
+})
+
+app.get('/:id/query', (req, res) => {
+  //call to dbs to get all documents in a collection
+  //response needs to be passed to display view below instead of []
+  res.render('display', {
+    requests: []
+  });
 })
 
 app.post('/', (req, res) => {
