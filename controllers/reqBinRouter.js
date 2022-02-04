@@ -1,6 +1,5 @@
 const reqBinRouter = require("express").Router();
 const { createPgBin, generatePgKey } = require("../lib/javascripts/createPgBin");
-const { addReqDoc } = require("../lib/javascripts/mongoQuery");
 const parseRequest = require("../lib/javascripts/parseRequest");
 
 
@@ -12,8 +11,7 @@ reqBinRouter.get('/create-bin', async (req, res) => {
   console.log("Key generated successfully: ", key);
   await createPgBin(key);
 
-  await addReqDoc(parseRequest(req), key);
-  res.redirect(`/${key}/view`);
+  res.redirect(`/${key}/instructions`);
 });
 
 module.exports = reqBinRouter;

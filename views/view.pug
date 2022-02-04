@@ -12,6 +12,12 @@ html(lang='en')
       h2 Requests
       each request in requests
         div(class='display')
-          div(class='info') #{request.host}
-          div(class='info') #{request.method}
-          div(class='info') #{request.status}
+          div(class='info') #{new Date(request.timestamp).toLocaleString()}
+          div(class='info') #{request.requestLine}
+
+          each val, key in request.header 
+            div(class='info') #{key}: #{val}<br/>
+
+          //- each val, key in request.body
+          //-   div(class='info') body: #{key}: #{val}
+          div(class='info') #{JSON.stringify(request.body)}
