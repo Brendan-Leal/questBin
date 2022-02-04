@@ -1,0 +1,17 @@
+doctype html
+html(lang='en')
+  head
+    title RequestBin
+    meta(charset='utf-8')
+    link(rel='stylesheet', href='/styles.css')
+    link(rel='preconnect', href='https://fonts.googleapis.com')
+    link(rel='preconnect', href='https://fonts.gstatic.com', crossorigin='')
+    link(href='https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600&display=swap', rel='stylesheet')
+  body
+    #display-container
+      h2 Requests
+      each request in requests
+        div(class='display')
+          div(class='info') #{request.host}
+          div(class='info') #{request.method}
+          div(class='info') #{request.status}

@@ -7,6 +7,9 @@ const express = require('express');
 const app = express();
 const port = process.env.PORT;
 
+app.set("views", "./views");
+app.set("view engine", "pug");
+
 app.use(express.static('public'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -25,6 +28,32 @@ app.get('/:id/view', (req, res) => {
     }
   );
 });
+
+// navigate here to delete all reqs from seed bin
+app.get('/delete-seed', (req, res) => {
+  deleteAllReqDocs_FromOneBin(SEED_BIN).then(
+    response => {
+      console.log(response);
+      res.send(response);
+    }
+  )
+})
+
+app.get('/', (req, res) => {
+  res.render('index')
+})
+
+app.get('/:id', (req, res) => {
+  res.render('bin');
+})
+
+app.get('/:id/query', (req, res) => {
+  //call to dbs to get all documents in a collection
+  //response needs to be passed to display view below instead of []
+  res.render('display', {
+    requests: []
+  });
+})
 
 app.all("/:id", async (req, res) => {
   const binId = req.params.id;

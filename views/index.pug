@@ -1,0 +1,18 @@
+doctype html
+html
+  head
+    title RequestBin
+    meta(charset="utf-8")
+    link(rel="stylesheet", href="styles.css")
+    link(rel="preconnect", href="https://fonts.googleapis.com")
+    link(rel="preconnect", href="https://fonts.gstatic.com", crossorigin)
+    link(href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600&display=swap", rel="stylesheet")
+  body
+    #front-page-container
+      h1 Inspect HTTP requests
+      h3
+        | Free tool to collect and inspect incoming HTTP requests
+        br
+        | in order to develop and debug webhooks
+      a(href="/:id")
+        button#create Create a RequestBin
