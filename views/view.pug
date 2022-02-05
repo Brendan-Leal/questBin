@@ -18,6 +18,4 @@ html(lang='en')
           each val, key in request.header 
             div(class='info') #{key}: #{val}<br/>
 
-          //- each val, key in request.body
-          //-   div(class='info') body: #{key}: #{val}
           div(class='info') #{JSON.stringify(request.body)}

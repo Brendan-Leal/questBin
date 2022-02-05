@@ -7,9 +7,20 @@ html(lang='en')
     link(rel='preconnect', href='https://fonts.googleapis.com')
     link(rel='preconnect', href='https://fonts.gstatic.com', crossorigin='')
     link(href='https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600&display=swap', rel='stylesheet')
+    script(type='text/javascript', src='/scripts/copyURL.js')
   body
     #bin-id-container
-      h2 Bin URL
-      h3#url http://somedomain.com/#{urlKey}
-      h2 Make a request to get started
-      h3 Go to http://somedomain.com/#{urlKey}/view to see your saved HTTP requests
+      h2 Send any HTTP request to this URL to get started 
+      h3(class='bin-url')#url http://somedomain.com/#{urlKey}
+      button(id='copy-url-btn') Copy to clipboard 
+      a(href=`http://localhost:3000/${urlKey}/view`) 
+        button View your HTTP requests here 
+
+      //- TODO: update the url to an actual URL not localhost 
+      div(id="instructions")
+        h2 How do I use this URL?
+        p Use the URL above and enter it into the address bar of your browser. CAUTION It's recommended that you do this in another window or tab.
+        p OR
+        p Make a curl request:<br><br>curl http://localhost:3000/405p<br><br>#{`curl -X POST -H "Content-Type: application/json" -d '{"foo": "bar"}' http://localhost:3000/<YOUR UNIQUE KEY>`}
+        p OR
+        a(href="https://www.postman.com/") Use Postman

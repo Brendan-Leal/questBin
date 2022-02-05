@@ -1,6 +1,5 @@
 const reqBinRouter = require("express").Router();
 const { createPgBin, generatePgKey } = require("../lib/javascripts/createPgBin");
-const parseRequest = require("../lib/javascripts/parseRequest");
 
 
 
@@ -8,7 +7,6 @@ const parseRequest = require("../lib/javascripts/parseRequest");
 // and redirect user 
 reqBinRouter.get('/create-bin', async (req, res) => {
   const key = await generatePgKey();
-  console.log("Key generated successfully: ", key);
   await createPgBin(key);
 
   res.redirect(`/${key}/instructions`);
