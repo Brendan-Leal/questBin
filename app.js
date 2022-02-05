@@ -1,6 +1,6 @@
 require('dotenv').config();
 
-const { addReqDoc, listAllBins, getAllReqDocs_FromOneBin, findSingleReqDoc_FromOneBin, deleteAllReqDocs_FromOneBin } = require('./lib/javascripts/mongoQuery.js');
+const { addReqDoc, getAllReqDocs_FromOneBin, deleteAllReqDocs_FromOneBin } = require('./lib/javascripts/mongoQuery.js');
 const parseRequest = require('./lib/javascripts/parseRequest');
 const { keyNotFound } = require('./lib/javascripts/createPgBin');
 
@@ -19,24 +19,11 @@ app.use(express.urlencoded({ extended: true }));
 const reqBinRouter = require("./controllers/reqBinRouter");
 app.use("/api/req-bin", reqBinRouter);
 
-// Naviate here to get all of the requests in the bin
-// just use any parameter, such as "http://localhost:3000/12/view"
 app.get('/:id/instructions', (req, res) => {
   const key = req.params.id;
-  
   res.render('instructions', {
-    urlKey: key
+    urlKey: key,
   });
-});
-
-// navigate here to delete all reqs from seed bin
-app.get('/delete-seed', (req, res) => {
-  deleteAllReqDocs_FromOneBin(SEED_BIN).then(
-    response => {
-      console.log(response);
-      res.send(response);
-    }
-  );
 });
 
 app.get('/', (req, res) => {
@@ -50,7 +37,6 @@ app.get('/:id/view', (req, res) => {
 
   getAllReqDocs_FromOneBin(key).then(
     response => {
-      console.log(`There are ${response.length} records.`);
       res.render('view', {
         requests: response
       });
